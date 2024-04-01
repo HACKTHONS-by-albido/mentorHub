@@ -2,6 +2,7 @@
   import React from "react";
   import { motion } from "framer-motion";
   import { cn } from "@/utils/cn";
+import { Globe } from "./globed";
 
   export function Lamp() {
     return (
@@ -18,6 +19,7 @@
       >
         mentorHub <br /> the right way
       </motion.h1>
+    
     </LampContainer>
     
     );
