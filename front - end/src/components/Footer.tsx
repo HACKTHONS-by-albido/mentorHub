@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gradient-to-t from-gray-900 to-gray-800 text-white py-8 mt-16 ">
+    <footer className="bg-gradient-to-t from-gray-900 to-gray-800 text-white py-8  ">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center px-6 lg:px-12">
         <div className="flex items-center space-x-4">
           <Image src="/Mentor.png" height={40} width={40} className="h-8" alt="mentorHub" />
