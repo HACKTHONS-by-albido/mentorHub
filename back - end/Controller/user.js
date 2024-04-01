@@ -6,7 +6,7 @@ var bcrypt=require('bcrypt')
 
 module.exports={
     register: async (req,res)=>{
-        const {username,email,password}=req.body
+        const {username,email,password,role}=req.body
 
             const finduser = await userSchema.find({email:email})
             if(finduser.length>0){
@@ -17,7 +17,8 @@ module.exports={
                     await userSchema.create({
                         username:username,
                         email:email,
-                        password:hash
+                        password:hash,
+                        role:role
                     })
                     
                 }) 

@@ -4,7 +4,10 @@ const mongoose=require('mongoose')
 const cors=require('cors')
 const morgan = require('morgan')
 const routes=require('./Routes/index')
-
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const {chat} = require('./Controller/chat')
+const { auth } = require('./middleware/JWTAUTH')
 
 
 require('dotenv').config()
@@ -26,7 +29,17 @@ mongoose.connect(process.env.MONGO_URL)
   app.use(routes)
 
   app.use(morgan('dev'));
-
-app.listen(PORT,(req,res)=>{
+// Creating traditional server for socket.io  
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.ORGIN,
+    credentials:true
+  },
+  allowRequest:auth
+});
+io.on("connection",chat );
+module.exports.io=io
+server.listen(PORT,(req,res)=>{
     console.log(`server listening on port ${PORT}`);
 })

@@ -6,6 +6,8 @@ const user = new mongoose.Schema({
     password: { type: String, required: true },
     profilepicture: String,
     bio: String,
+    role:String,
+    chats:[{}]
 });
 
 const userSchema = mongoose.model('user', user);
