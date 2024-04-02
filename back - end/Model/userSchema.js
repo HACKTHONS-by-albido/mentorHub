@@ -7,6 +7,7 @@ const user = new mongoose.Schema({
     profilepicture: String,
     bio: String,
     role:String,
+    interests:[{type:String}],
     chats:[{type:mongoose.SchemaTypes.ObjectId,ref:'user'}]
 });
 
