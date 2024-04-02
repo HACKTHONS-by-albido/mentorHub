@@ -1,6 +1,8 @@
 'use client'
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { setCookie } from "cookies-next";
 
 interface LogInProps {}
 
@@ -20,6 +22,22 @@ export const LogIn: React.FC<LogInProps> = ({}) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    axios.post("http://localhost:8080/api/auth/login",{email,password}).then(
+              (res)=>{
+                console.log(res);
+                
+                const {auth,tokenName,token,push,message}=res.data
+                if (auth===true) {
+                  setCookie(tokenName,token)
+                  window.location.href=push
+                }
+                alert(message)
+              }
+              ).catch(
+                (err: any) => {
+                  alert(err.message);
+                }
+                )
     
   };
 

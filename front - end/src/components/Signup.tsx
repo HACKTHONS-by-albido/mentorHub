@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { setCookie } from "cookies-next";
 import React, { useState } from "react";
 
 export function Signup() {
@@ -9,9 +10,12 @@ export function Signup() {
   const [role, setrole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const handleRegister = (e:any) => {
-    e.preventDefault()
-    if (email && password && role && password==confirmPassword) {
+  console.log(email);
+
+  const handleRegister = (e: any) => {
+    e.preventDefault();
+
+    if (email && password && role && password == confirmPassword) {
       axios
         .post("http://localhost:8080/api/auth/register", {
           email,
@@ -19,13 +23,21 @@ export function Signup() {
           role,
         })
         .then((res) => {
-          alert(res.data.message);
+          const { auth, tokenName, token, push, message } = res.data;
+          console.log(res.data);
+
+          if (auth === true) {
+            setCookie(tokenName, token);
+            window.location.href = push;
+          }
+
+          alert(message);
         })
         .catch((err: any) => {
           alert(err.message);
         });
-    }else{
-      alert('a field is missing')
+    } else {
+      alert("a field is missing");
     }
   };
   const handleOpen = () => setOpen(true);
@@ -126,7 +138,6 @@ export function Signup() {
                   id="role"
                   onChange={(e: any) => setrole(e.target.value)}
                   className="mt-1 px-3 py-2 block w-full rounded-md border-2 border-solid border-black shadow-sm focus:border-#009AF0 focus:ring focus:ring-#009AF0 focus:ring-opacity-50"
-
                 >
                   <option value="">mentor or mentee </option>
                   <option value="mentor">mentor</option>
