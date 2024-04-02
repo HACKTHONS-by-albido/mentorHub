@@ -1,8 +1,10 @@
 const express=require('express')
 const userRoutes=express.Router()
-const userController=require('../Controller/user')
+const {register, login}=require('../Controller/user')
 
-userRoutes.post('/auth/register',userController.register)
+userRoutes.post('/auth/register',register)
+userRoutes.post('/auth/login',login)
+
 
 
 module.exports = userRoutes
