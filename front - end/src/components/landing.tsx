@@ -7,9 +7,11 @@ import { Globe } from './ui/globed'
 
 const Landing = () => {
   return (
-    <div><Lamp/>
-<Globe/>
-    <InfiniteMovingCardsDemo/></div>
+    <div>
+      <Lamp/>
+       <Globe/>
+    <InfiniteMovingCardsDemo/>
+    </div>
   )
 }
 
