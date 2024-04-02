@@ -7,7 +7,7 @@ const user = new mongoose.Schema({
     profilepicture: String,
     bio: String,
     role:String,
-    chats:[{}]
+    chats:[{type:mongoose.SchemaTypes.ObjectId,ref:'user'}]
 });
 
 const userSchema = mongoose.model('user', user);
