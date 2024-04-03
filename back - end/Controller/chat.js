@@ -4,8 +4,16 @@ const userSchema = require('../Model/userSchema');
 
 module.exports={
     chat:(socket) => {
+      socket.on('joinRoom', (fromId,toId) => {
+        const room=fromId+toId
+        
+        socket.join(room.split('').sort((a,b)=>a-b).join(''));
+      });
         socket.on("chat message", async (msg,fromId,toId) => {
-          console.log(msg);
+          const room=fromId+toId
+          const roomid=room.split('').sort((a,b)=>a-b).join('')
+          
+          console.log(roomid);
           if (msg) {
             await messageSchema.create({
                 ToId:toId,
@@ -20,7 +28,7 @@ module.exports={
           }
           const msgs = await messageSchema.find({$and:[{ToId:toId,FromId:fromId}]}).populate('ToId FromId')
           
-          io.to(toId).emit('private',msgs);
+          io.to(roomid).emit('private',msgs);
         });
       },
 }
