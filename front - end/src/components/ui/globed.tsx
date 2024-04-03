@@ -411,8 +411,8 @@ export function Globe() {
           }}
           className="div"
         >
-          <h2 className="text-center text-xl md:text-4xl font-bold text-white">
-          &quot;We are connecting the world wide!&quot;
+          <h2 className="text-center text-xl md:text-4xl font-bold text-black dark:text-white">
+          &quot;We are connecting the world wide!  &quot;
           </h2>
           <p className="text-center text-base md:text-lg font-normal text-neutral-200 max-w-md mt-2 mx-auto">
           Welcome to MentorHub!.Explore endless opportunities!
