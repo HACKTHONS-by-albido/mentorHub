@@ -435,7 +435,22 @@ const Updateprofile = () => {
         </div>
       )}
     </div>
+	<div className="flex  gap-3 justify-end mb-6">
+	<button
+                      className="flex justify-center rounded border mr-4 border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:"
+                      type="submit"
+                    >
+                      Cancel
+                    </button>
+
+	<button
+                      className="flex justify-center rounded bg-blue-950 py-2 px-6 text-white font-medium text-gray hover:bg-opacity-95"
+                      type="submit"
+                    >
+                      Save 
+                    </button>
 		
+	</div>
 	</div>
 </div>
       
