@@ -11,6 +11,176 @@ interface Skill {
   percentage: string;
 }
 
+
+const InterestDropdown: React.FC = () => {
+	const [search, setSearch] = useState<string>("");
+	const [showSelector, setShowSelector] = useState<boolean>(false);
+	const [selected, setSelected] = useState<number[]>([]);
+	const [options, setOptions] = useState([
+	  { id: 1, name: "Football" },
+	{ id: 2, name: "Basketball" },
+	{ id: 3, name: "Tennis" },
+	{ id: 4, name: "Swimming" },
+	{ id: 5, name: "Golf" },
+	{ id: 6, name: "Programming" },
+	{ id: 7, name: "Web Development" },
+	{ id: 8, name: "Mobile App Development" },
+	{ id: 9, name: "Data Science" },
+	{ id: 10, name: "Artificial Intelligence" },
+	{ id: 11, name: "Graphic Design" },
+	{ id: 12, name: "UI/UX Design" },
+	{ id: 13, name: "Digital Marketing" },
+	{ id: 14, name: "Content Writing" },
+	{ id: 15, name: "Public Speaking" },
+	{ id: 16, name: "Mathematics" },
+	{ id: 17, name: "Physics" },
+	{ id: 18, name: "Chemistry" },
+	{ id: 19, name: "Biology" },
+	{ id: 20, name: "Literature" },
+	{ id: 21, name: "History" },
+	{ id: 22, name: "Music" },
+	{ id: 23, name: "Art" },
+	{ id: 24, name: "Cooking" },
+	{ id: 25, name: "Photography" },
+	{ id: 26, name: "Fitness Training" },
+	{ id: 27, name: "Yoga" },
+	{ id: 28, name: "Meditation" },
+	{ id: 29, name: "Language Learning" },
+	{ id: 30, name: "Career Development" },
+	{ id: 31, name: "Social Media Management" },
+	{ id: 32, name: "Video Editing" },
+	{ id: 33, name: "Photography" },
+	{ id: 34, name: "Fashion Design" },
+	{ id: 35, name: "Interior Design" },
+	{ id: 36, name: "Cooking" },
+	{ id: 37, name: "Baking" },
+	{ id: 38, name: "Gardening" },
+	{ id: 39, name: "Traveling" },
+	{ id: 40, name: "Outdoor Activities" },
+	{ id: 41, name: "Gaming" },
+	{ id: 42, name: "Film Making" },
+	{ id: 43, name: "Animation" },
+	{ id: 44, name: "Robotics" },
+	{ id: 45, name: "Entrepreneurship" },
+	{ id: 46, name: "Finance" },
+	{ id: 47, name: "Investing" },
+	{ id: 48, name: "Real Estate" },
+	{ id: 49, name: "Stock Market" },
+	{ id: 50, name: "Economics" },
+	]);
+  
+	const clearOpts = () => {
+	  setSearch("");
+	  setShowSelector(false);
+	  setOptions([]);
+	};
+  
+	const select = (id: number, name: string): void => {
+	  if (!selected.includes(id)) {
+		setSelected([...selected, id]);
+	  }
+	};
+  
+	const remove = (id: number): void => {
+	  setSelected(selected.filter((item) => item !== id));
+	};
+  
+	const goSearch = (): void => {
+	  if (search) {
+		setShowSelector(true);
+	  } else {
+		setShowSelector(false);
+	  }
+	};
+  
+	const filteredOptions = options.filter(option =>
+	  option.name.toLowerCase().includes(search.toLowerCase())
+	);
+  
+	return (
+	  <div className="relative max-w-sm   text-xs">
+		  <label htmlFor="avatar" className="block text-sm font-medium text-gray-700">
+		  Select your interests
+				</label>
+		<div className="bg-white rounded-md p-2 relative flex flex-col gap-1 ">
+		<div className="">
+		
+		<input
+		  type="text"
+		  value={search}
+		  onChange={(e) => setSearch(e.target.value)}
+		  placeholder="Search"
+		  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+		  onFocus={() => setShowSelector(true)}
+		  onBlur={() => setTimeout(goSearch, 200)} 
+		/>
+		{showSelector && (
+		  <div className="absolute left-0 bg-white z-30 w-full rounded-b-md font-medium">
+			<div className="p-2 space-y-1">
+			  {filteredOptions.map(({ id, name }) => (
+				<div
+				  key={id}
+				  onClick={() => select(id, name)}
+				  className={`${
+					selected.includes(id)
+					  ? "bg-blue-200"
+					  : "bg-white hover:bg-blue-200"
+				  } border-2 border-blue-200 cursor-pointer rounded-md p-2`}
+				>
+				  {name}
+				</div>
+			  ))}
+			  {filteredOptions.length === 0 && (
+				<div className="text-gray-500">No result</div>
+			  )}
+			</div>
+		  </div>
+		)}
+	  </div>
+			<div className="flex gap-1 flex-wrap">
+		  {selected.map((id) => {
+			const option = options.find((opt) => opt.id === id);
+			if (!option) return null;
+			const { name } = option;
+			return (
+			  <div key={id} className="bg-blue-200 rounded-md flex items-center">
+				<div className="p-2">{name}</div>
+				<div
+				  onClick={() => remove(id)}
+				  className="p-2 select-none rounded-r-md cursor-pointer hover:bg-magma-orange-clear"
+				>
+				  <svg
+					width="14"
+					height="14"
+					viewBox="0 0 14 14"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				  >
+					<path
+					  d="M12.5745 1L1 12.5745"
+					  stroke="#FEAD69"
+					  strokeWidth="2"
+					  strokeLinecap="round"
+					/>
+					<path
+					  d="M1.00024 1L12.5747 12.5745"
+					  stroke="#FEAD69"
+					  strokeWidth="2"
+					  strokeLinecap="round"
+					/>
+				  </svg>
+				</div>
+			  </div>
+			);
+		  })}
+		  </div>
+		
+		</div>
+	  </div>
+	);
+  };
+  
+
 const Updateprofile = () => {
         const [connect,setConnect]=useState(null)
         const [link, setLink] = useState('');
@@ -187,6 +357,7 @@ const Updateprofile = () => {
 					className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 					>Save all</button>
 			</div>
+			<InterestDropdown/>
 		</div>
 		<div
 			className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800"
@@ -459,3 +630,4 @@ const Updateprofile = () => {
 }
 
 export default Updateprofile
+
