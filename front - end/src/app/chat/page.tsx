@@ -1,11 +1,71 @@
+'use client'
+import { axiosInstance } from "@/components/axiosInstance";
+import MessageComponent from "@/components/chat/bubble";
 import { socket } from "@/components/socket";
+import axios from "axios";
+import { getCookie } from "cookies-next";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Page() {
+  const searchParams = useSearchParams()
+  const cookie=getCookie('token')
+ const [currentId,setCurrentId]=useState<any>("")
+ const [chats,setChat]=useState<any>("")
+ const [history,sethistory]=useState<any>("")
+
+console.log(chats);
+
+ console.log(currentId);
+ const handleSubmit=(e:any)=>{
+   e.preventDefault()
+   socket.emit("chatMessage",e.target.chat.value,cookie,currentId._id)
    
+  }
+  const search = searchParams.get('id')
+  const findMentor=(id:any)=>{
+    axiosInstance.get(`/getDetails/${id}`).then(
+      (res)=>{
+        setCurrentId(res.data.data)
+        socket.emit('joinRoom',cookie,search)
+         
+      }
+      )
+    }
+    useEffect(
+      ()=>{
+
+        socket.on('chatMessage',(msgs)=>{
+          setChat(msgs)
+       })
+       return ()=>{
+        socket.off('chatMessage',(msgs)=>{
+          setChat(msgs)
+       })
+       }
+      }
+    ,[])
+    useEffect(
+      ()=>{
+        
+        if(search){
+          findMentor(search)
+        socket.emit('joinRoom',cookie,search)
+
+        }
+        axiosInstance.get('/profile').then(
+          (res)=>{
+             sethistory(res.data.data.chats)
+          }
+        )
+      
+    }
+  ,[])
   return (
     <div className="flex">
       <div className="w-2/6 bg-white h-screen">
         <ul className="w-full h-screen p-2 divide-y divide-gray-200 dark:divide-gray-700">
+          {history && history.reverse().map((item:any)=>(
           <li className="pb-3 p-4 ">
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <div className="flex-shrink-0">
@@ -17,45 +77,36 @@ export default function Page() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                  Neil Sims
+                  {item.username}
                 </p>
                 <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                  email@flowbite.com
+                  hi
                 </p>
               </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                $320
+              <div className="inline-flex bg-green-400 p-2 rounded-full items-center  font-semibold text-gray-900 dark:text-white">
+                1
               </div>
             </div>
-          </li>
-          <li className="pb-3 p-4 ">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="flex-shrink-0">
-                <img
-                  className="w-16 h-16 rounded-full"
-                  src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
-                  alt="Neil image"
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                  Neil Sims
-                </p>
-                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                  email@flowbite.com
-                </p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                $320
-              </div>
-            </div>
-          </li>
+          </li>))}
+          
         </ul>
       </div>
-      <div className="w-4/6 p-5">
-        <div className="h-5/6 bg-neutral-800 rounded-3xl "></div>
+      <div className="w-4/6  p-5 ">
+        <div className="h-128 bg-neutral-800 rounded-3xl   ">
+          {currentId?<div className="w-full h-full flex flex-col">
+            <div className="w-full h-1/6 bg-slate-600 rounded-ss-3xl rounded-se-3xl flex justify-center items-center">
+              <div>{currentId.username}</div>
+            </div>
+            <div className="w-full flex flex-col gap-3  overflow-auto">
 
-        <form className="h-1/6">
+              {chats ? chats.map((item:any)=>(
+                <MessageComponent/>
+              )):null}
+            </div>
+          </div>:<div className="w-full h-full flex items-center justify-center">Start Chating</div>}
+        </div>
+
+        <form className="h-1/6" onSubmit={handleSubmit}>
           <label htmlFor="chat" className="sr-only">
             Your message
           </label>
@@ -117,6 +168,7 @@ export default function Page() {
               id="chat"
               className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Your message..."
+
             ></textarea>
             <button
               type="submit"

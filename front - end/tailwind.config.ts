@@ -36,6 +36,9 @@ module.exports = {
         scroll:
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
       },
+      height: {
+        '128': '40rem',
+      },
       keyframes: {
         scroll: {
           to: {

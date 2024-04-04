@@ -98,5 +98,21 @@ module.exports = {
       });
     }
   },
-
+profile:async (req,res)=>{
+  const user=await userSchema.findOne({_id:res.token}).populate('chats')
+  if (user) {
+    res.status(200).json({
+      status:'success',
+      data:user
+    })
+  }
+},
+getDetails:async (req,res)=>{
+  const {id}=req.params
+  const user=await userSchema.findOne({_id:id})
+  res.json({
+    status:"success",
+    data:user
+  })
+}
 };

@@ -1,34 +1,53 @@
-const { io } = require('..');
 const messageSchema=require('../Model/message');
 const userSchema = require('../Model/userSchema');
+const jwt = require("jsonwebtoken");
+const { io } = require("..");
 
 module.exports={
     chat:(socket) => {
       socket.on('joinRoom', (fromId,toId) => {
-        const room=fromId+toId
-        
-        socket.join(room.split('').sort((a,b)=>a-b).join(''));
-      });
-        socket.on("chat message", async (msg,fromId,toId) => {
-          const room=fromId+toId
-          const roomid=room.split('').sort((a,b)=>a-b).join('')
-          
-          console.log(roomid);
-          if (msg) {
-            await messageSchema.create({
-                ToId:toId,
-                FromId:fromId,
-                message: msg,
-            });
-            await userSchema.updateOne({_id:fromId},{$pull:{chats:toId}})
-            await userSchema.updateOne({_id:fromId},{$push:{chats:toId}})
-            await userSchema.updateOne({_id:toId},{$pull:{chats:fromId}})
-            await userSchema.updateOne({_id:toId},{$push:{chats:fromId}})
-
+        jwt.verify(fromId,process.env.JWT, async function (err, data) {
+          if (err) {
+            console.log({ status: "failure",message:err.message });
+             
+          } else {
+            const userId=await userSchema.findOne({_id:data.id})
+            const room=userId._id+toId
+            socket.join(room.split('').sort((a,b)=>a-b).join('')); 
           }
-          const msgs = await messageSchema.find({$and:[{ToId:toId,FromId:fromId}]}).populate('ToId FromId')
+        });
+      });
+        socket.on("chatMessage", async (msg,fromId,toId) => {
           
-          io.to(roomid).emit('private',msgs);
+          jwt.verify(fromId,process.env.JWT, async function (err, data) {
+            if (err) {
+              console.log({ status: "failure",message:err.message });
+               
+            } else {
+
+              const userId=await userSchema.findOne({_id:data.id})
+              console.log(userId);
+              const room=userId._id+toId
+              const roomid=room.split('').sort((a,b)=>a-b).join('')
+              
+              console.log(roomid);
+              if (msg) {
+                await messageSchema.create({
+                    ToId:toId,
+                    FromId:userId._id,
+                    message: msg,
+                });
+                await userSchema.updateOne({_id:userId._id},{$pull:{chats:toId}})
+                await userSchema.updateOne({_id:userId._id},{$push:{chats:toId}})
+                await userSchema.updateOne({_id:toId},{$pull:{chats:userId._id}})
+                await userSchema.updateOne({_id:toId},{$push:{chats:userId._id}})
+    
+              }
+              const msgs = await messageSchema.find({$and:[{ToId:toId,FromId:userId._id}]}).populate('ToId FromId')
+              
+              io.to(roomid).emit('private',msgs);
+            }
+          });
         });
       },
 }
