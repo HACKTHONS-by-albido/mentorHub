@@ -19,9 +19,12 @@ export default function Page() {
 console.log(chats);
 
  console.log(currentId);
- const handleSubmit=(e:any)=>{
+ const handleSubmit=async (e:any)=>{
    e.preventDefault()
-   socket.emit("chatMessage",e.target.chat.value,cookie,currentId._id)
+   await axiosInstance.post("/sendMessage",{msg:e.target.chat.value,id:currentId._id})
+  
+   socket.emit('privateMsg',cookie,currentId._id)
+   
    
   }
   const search = searchParams.get('id')
@@ -29,37 +32,26 @@ console.log(chats);
     axiosInstance.get(`/getDetails/${id}`).then(
       (res)=>{
         setCurrentId(res.data.data)
-        socket.emit('joinRoom',cookie,search)
+        socket.emit('privateMsg',cookie,id)
          
       }
       )
     }
-    useEffect(
-      ()=>{
-
-        socket.on('chatMessage',(msgs)=>{
-          setChat(msgs)
-       })
-       return ()=>{
-        socket.off('chatMessage',(msgs)=>{
-          setChat(msgs)
-       })
-       }
-      }
-    ,[])
+    
     useEffect(
       ()=>{
         
         if(search){
           findMentor(search)
-        socket.emit('joinRoom',cookie,search)
-
         }
-        axiosInstance.get('/profile').then(
-          (res)=>{
-             sethistory(res.data.data.chats)
-          }
-        )
+        socket.emit('joinRoom',cookie)
+           socket.on('joinRoom',(msgs)=>{
+          sethistory(msgs)
+       })
+        socket.on('privateMsg',(privat)=>{
+          setChat(privat)
+          })
+
       
     }
   ,[])
@@ -69,8 +61,8 @@ console.log(chats);
     <div className="flex">
       <div className="w-2/6 bg-white h-screen">
         <ul className="w-full h-screen p-2 divide-y divide-gray-200 dark:divide-gray-700">
-          {history && history.reverse().map((item:any)=>(
-          <li className="pb-3 p-4 ">
+          {history && history.chats.reverse().map((item:any)=>(
+          <li className="pb-3 p-4 cursor-pointer hover:bg-amber-200" onClick={()=>findMentor(item.peoples.filter((i:any)=>i._id!=history._id)[0]._id)}>
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <div className="flex-shrink-0">
                 <img
@@ -81,10 +73,11 @@ console.log(chats);
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                  {item.username}
+                  {item.peoples.filter((i:any)=>i._id!=history._id)[0].username || item.peoples.filter((i:any)=>i._id!=history._id)[0].email}
                 </p>
                 <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                  hi
+                {item.messages[item.messages.length-1].message}
+                  
                 </p>
               </div>
               <div className="inline-flex bg-green-400 p-2 rounded-full items-center  font-semibold text-gray-900 dark:text-white">
@@ -99,12 +92,12 @@ console.log(chats);
         <div className="h-128 bg-neutral-800 rounded-3xl   ">
           {currentId?<div className="w-full h-full flex flex-col">
             <div className="w-full h-1/6 bg-slate-600 rounded-ss-3xl rounded-se-3xl flex justify-center items-center">
-              <div>{currentId.username}</div>
+              <div>{currentId.username || currentId.email}</div>
             </div>
             <div className="w-full flex flex-col gap-3  overflow-auto">
 
               {chats ? chats.map((item:any)=>(
-                <MessageComponent/>
+                <MessageComponent item={item}/>
               )):null}
             </div>
           </div>:<div className="w-full h-full flex items-center justify-center">Start Chating</div>}

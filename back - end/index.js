@@ -6,11 +6,12 @@ const morgan = require('morgan')
 const routes=require('./Routes/index')
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const {chat} = require('./Controller/chat')
 const { auth } = require('./middleware/JWTAUTH')
 const messageSchema=require('./Model/message');
 const userSchema = require('./Model/userSchema');
 const jwt = require("jsonwebtoken");
+const conversation = require('./Model/conversation')
+const message = require('./Model/message')
 
 require('dotenv').config()
 
@@ -40,9 +41,37 @@ const io = new Server(server, {
   },
   // allowRequest:auth
 });
-module.exports.io=io
 io.on("connection",(socket) => {
-  socket.on('joinRoom', (fromId,toId) => {
+  socket.on('joinRoom', (fromId) => {
+    jwt.verify(fromId,process.env.JWT, async function (err, data) {
+      if (err) {
+        console.log({ status: "failure",message:err.message });
+         
+      } else {
+        const userId=await userSchema.findOne({_id:data.id})
+        const roomid=userId._id
+        
+        socket.join(roomid)
+        const msgs=await userSchema.findOne({_id:data.id}).populate({ 
+          path: 'chats',
+          options: {strictPopulate: false},
+          populate: {
+            path: 'peoples messages',
+            populate:{
+              path:'ToId FromId',
+              options: {strictPopulate: false},
+              select:'-chats'
+            },
+            options: {strictPopulate: false}
+          } 
+       })
+       console.log(msgs);
+        io.in(roomid).emit('joinRoom',msgs);
+
+      }
+    });
+  });
+  socket.on('privateMsg',(fromId,toId) => {
     jwt.verify(fromId,process.env.JWT, async function (err, data) {
       if (err) {
         console.log({ status: "failure",message:err.message });
@@ -50,46 +79,25 @@ io.on("connection",(socket) => {
       } else {
         const userId=await userSchema.findOne({_id:data.id})
         const room=userId._id+toId
-        socket.join(room.split('').sort((a,b)=>a-b).join('')); 
+        socket.join(room.split('').sort((a,b)=>a-b).join('')) 
         const roomid=room.split('').sort((a,b)=>a-b).join('')
-        const msgs = await messageSchema.find({$and:[{ToId:toId,FromId:userId._id}]}).populate('ToId FromId')
-        
-        io.to(roomid).emit('chatMessage',msgs);
+       const private1=await conversation.findOne({peoples:{ $all : [data.id, toId] }}).populate({
+        path:'messages',
+        populate:{
+          path:'ToId FromId',
+          select:'-chats'
+        }
+       })
+       const private=private1.messages
+       
+       console.log(private);
+        io.in(roomid).emit('privateMsg',private);
 
       }
     });
-  });
-    socket.on("chatMessage", async (msg,fromId,toId) => {
-      
-      jwt.verify(fromId,process.env.JWT, async function (err, data) {
-        if (err) {
-          console.log({ status: "failure",message:err.message });
-           
-        } else {
-
-          const userId=await userSchema.findOne({_id:data.id})
-          console.log(userId);
-          const room=userId._id+toId
-          const roomid=room.split('').sort((a,b)=>a-b).join('')
-          
-          console.log(roomid);
-          if (msg) {
-            await messageSchema.create({
-                ToId:toId,
-                FromId:userId._id,
-                message: msg,
-            });
-            await userSchema.updateOne({_id:userId._id},{$pull:{chats:toId}})
-            await userSchema.updateOne({_id:userId._id},{$push:{chats:toId}})
-            await userSchema.updateOne({_id:toId},{$pull:{chats:userId._id}})
-            await userSchema.updateOne({_id:toId},{$push:{chats:userId._id}})
-
-          }
-          
-        }
-      });
-    });
+  })
+   
   } );
-server.listen(PORT,(req,res)=>{
+server.listen(PORT,()=>{
     console.log(`server listening on port ${PORT}`);
 })

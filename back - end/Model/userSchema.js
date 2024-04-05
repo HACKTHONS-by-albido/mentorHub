@@ -8,7 +8,7 @@ const user = new mongoose.Schema({
     bio: String,
     role:String,
     interests:[{type:Object}],
-    chats:[{type:mongoose.SchemaTypes.ObjectId,ref:'user'}]
+    chats:[{type:mongoose.SchemaTypes.ObjectId,ref:'conversation'}]
 });
 
 const userSchema = mongoose.model('user', user);
