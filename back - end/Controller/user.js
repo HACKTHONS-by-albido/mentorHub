@@ -147,5 +147,35 @@ module.exports = {
       status:'success'
      })
   },
+  additionalDetails:async (req,res)=>{
+    try {
+      const { name, avatar, location, interests } = req.body;
+      
+      const updated = await userSchema.updateOne({ _id: res.token }, {
+          interests: interests,
+          profilepicture: avatar,
+          username: name
+      });
 
-};
+      const user = await userSchema.findOne({ _id: res.token }).populate("chats");
+
+      if (user) {
+          res.json({
+              status: "success",
+              data: user
+          });
+      } else {
+          res.json({
+              status: "failure",
+              message: "User not found"
+          });
+      }
+  } catch (error) {
+      res.status(500).json({
+          status: "error",
+          message: error.message 
+      });
+  }
+  },
+
+}
