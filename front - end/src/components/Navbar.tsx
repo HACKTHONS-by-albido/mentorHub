@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { IoNotifications } from "react-icons/io5";
@@ -7,7 +8,7 @@ import { IoNotifications } from "react-icons/io5";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasNotifications, setHasNotifications] = useState(false); // State to track notifications
-
+const router = useRouter()
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -21,7 +22,7 @@ const Navbar = () => {
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-3">
+            <a  onClick={() => router.push('/Home')} className="flex items-center space-x-3">
               <Image
                 src="/Mentor.png"
                 height={40}
@@ -37,6 +38,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <a
               href="#"
+              onClick={() => router.push('/Home')}
               className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
             >
               Home
@@ -68,7 +70,7 @@ const Navbar = () => {
               )}
             </button>
 
-            <button>
+            <button onClick={() => router.push('/chat')}>
               <IoChatbubblesSharp />
             </button>
             <button
@@ -78,6 +80,7 @@ const Navbar = () => {
               Logout
             </button>
             <Image
+            onClick={() => router.push('/mentor')}
               src="/avatar.png"
               height={40}
               width={40}
@@ -105,8 +108,9 @@ const Navbar = () => {
                 />
               </svg>
             </button>
-            <div className="flex justify-end">
+            <div className="flex justify-end" >
               <Image
+              onClick={() => router.push('/mentor')}
                 src="/avatar.png"
                 height={40}
                 width={40}
@@ -122,6 +126,7 @@ const Navbar = () => {
           <div className="flex flex-col space-y-4 px-4 py-2">
             <a
               href="#"
+              onClick={() => router.push('/Home')}
               className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
             >
               Home

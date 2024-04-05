@@ -37,7 +37,7 @@ const Mentorprofile = () => {
     },
   ];
   return (
-    <div className="h-full bg-gray-200 flex max-[893px]:flex-col  gap-3 p-2  ">
+    <div className="h-full bg-gray-200 flex max-[893px]:flex-col mt-10 gap-3 p-2  ">
       <div className="lg:w-[40%] md:w-full">
         <div className="  bg-white shadow-lg transform duration-200 easy-in-out">
           <div className="h-40 overflow-hidden">
