@@ -1,4 +1,6 @@
 'use client'
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { axiosInstance } from "@/components/axiosInstance";
 import MessageComponent from "@/components/chat/bubble";
 import { socket } from "@/components/socket";
@@ -62,6 +64,8 @@ console.log(chats);
     }
   ,[])
   return (
+    <>
+    <Navbar/>
     <div className="flex">
       <div className="w-2/6 bg-white h-screen">
         <ul className="w-full h-screen p-2 divide-y divide-gray-200 dark:divide-gray-700">
@@ -189,5 +193,7 @@ console.log(chats);
         </form>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
