@@ -39,7 +39,7 @@ const Mentorprofile = () => {
   return (
     <div className="h-full bg-gray-200 flex max-[893px]:flex-col mt-10 gap-3 p-2  ">
       <div className="lg:w-[40%] md:w-full">
-        <div className="  bg-white shadow-lg transform duration-200 easy-in-out">
+        <div className="  bg-white shadow-lg transform duration-200 easy-in-out rounded-lg">
           <div className="h-40 overflow-hidden">
             <img
               className="w-full"
@@ -136,13 +136,13 @@ const Mentorprofile = () => {
             </div>
             <hr className="mt-6" />
             <div className="flex ">
-              <div className="text-center w-1/2 p-4 bg-red-600 hover:bg-gray-100 cursor-pointer">
+              <div className="text-center w-1/2 p-4 text-white rounded-lg bg-red-600 hover:bg-gray-100 cursor-pointer">
                 <p>
                   <span className="font-semibold">Resume </span>
                 </p>
               </div>
               <div className="border"></div>
-              <div className="text-center w-1/2 p-4 bg-green-600 hover:bg-gray-100 cursor-pointer">
+              <div className="text-center w-1/2 p-4 text-white rounded-lg bg-green-600 hover:bg-gray-100 cursor-pointer">
                 <p>
                   {" "}
                   <span className="font-semibold"></span> Following
@@ -152,7 +152,7 @@ const Mentorprofile = () => {
           </div>
         </div>
       {/* skill badge */}
-        <div className="  bg-white shadow-lg transform p-10 h-auto duration-200 easy-in-out mt-2">
+        <div className="  bg-white shadow-lg transform p-10 h-auto duration-200 rounded-lg easy-in-out mt-2">
           {career.map((i) => (
             <div
               className="inline-block bg-blue-500 h-10 p-1  rounded-md shadow-md m-2"
@@ -169,7 +169,7 @@ const Mentorprofile = () => {
 
       {/* general information */}
       <div className="w-full ">
-        <div className="  bg-white flex flex-col max-[893px]:items-center  gap-10 shadow-lg w-full pt-16 p-8 transform duration-200 easy-in-out">
+        <div className="  bg-white flex flex-col max-[893px]:items-center  rounded-lg gap-10 shadow-lg w-full pt-16 p-8 transform duration-200 easy-in-out">
           <div className="lg:pr-36">
             <h1 className="text-2xl font-bold text-black mb-4">
               General Information
@@ -220,7 +220,7 @@ const Mentorprofile = () => {
           </div>
         </div>
         {/* Skill section */}
-        <div className="  bg-white flex flex-col gap-10 shadow-lg mt-4 w-full pt-16 p-8 transform duration-200 easy-in-out">
+        <div className="  bg-white flex flex-col gap-10 shadow-lg mt-4  rounded-lg w-full pt-16 p-8 transform duration-200 easy-in-out">
         <h2 className="text-xl font-bold text-black mb-4">Skills</h2>
 
           <div className="lg:flex gap-14">
@@ -245,7 +245,7 @@ const Mentorprofile = () => {
                   <div className="mb-1 text-base font-medium text-blue-600">
                     {item.name}
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
+                  <div className="w-full bg-gray-200  rounded-full h-2.5 mb-4 dark:bg-gray-700">
                     <div
                       className="bg-gray-600 h-2.5 rounded-full dark:bg-gray-400"
                       style={{ width: `${item.per}` }}
