@@ -143,46 +143,68 @@ module.exports = {
         { $push: { messages: newMessage._id } }
       );
     }
-     res.json({
-      status:'success'
-     })
+    res.json({
+      status: "success",
+    });
   },
-  additionalDetails:async (req,res)=>{
-    try {
-      const { name, avatar, location, interests } = req.body;
-      
-      const updated = await userSchema.updateOne({ _id: res.token }, {
-          interests: interests,
-          profilepicture: avatar,
-          username: name
-      });
+  additionalDetails: async (req, res) => {
+    console.log(req.body);
 
-      const user = await userSchema.findOne({ _id: res.token }).populate("chats");
+    try {
+      const {
+        name,
+        avatar,
+        profession,
+        phonenumber,
+        interests,
+        place,
+        latesteducation,
+        about,
+        languages,
+      } = req.body;
+
+      const updated = await userSchema.updateOne(
+        { _id: res.token },
+        {
+          profilepicture: avatar,
+          // username: name,
+          profession,
+          phonenumber,
+          interests,
+          place,
+          latesteducation,
+          about,
+          languages,
+        }
+      );
+
+      const user = await userSchema
+        .findOne({ _id: res.token })
+        .populate("chats");
 
       if (user) {
-          res.json({
-              status: "success",
-              data: user
-          });
+        res.json({
+          status: "success",
+          data: user,
+        });
       } else {
-          res.json({
-              status: "failure",
-              message: "User not found"
-          });
+        res.json({
+          status: "failure",
+          message: "User not found",
+        });
       }
-  } catch (error) {
+    } catch (error) {
       res.status(500).json({
-          status: "error",
-          message: error.message 
+        status: "error",
+        message: error.message,
       });
-  }
+    }
   },
-  getMentors: async (req,res)=>{
-   const mentors=await userSchema.find({role:"mentor"},'-chats')
-   res.json({
-    status: "success",
-    data: mentors,
-  });
-  }
-
-}
+  getMentors: async (req, res) => {
+    const mentors = await userSchema.find({ role: "mentor" }, "-chats");
+    res.json({
+      status: "success",
+      data: mentors,
+    });
+  },
+};
