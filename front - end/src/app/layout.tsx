@@ -4,7 +4,7 @@ import "./globals.css";
 import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-
+//team albido
 export const metadata: Metadata = {
   title: "mentorHub",
   description: "Connecting Mentors and Mentees for Personal and Professional Growth",

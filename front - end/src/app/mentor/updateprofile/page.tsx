@@ -6,9 +6,8 @@ const page = () => {
   return (
     <div>
       <Navbar/>
-
     <Updateprofile/>
-
+    
     </div>
   )
 }
