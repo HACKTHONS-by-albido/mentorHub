@@ -4,7 +4,7 @@ import "./globals.css";
 import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-//team albido
+//team albido 
 export const metadata: Metadata = {
   title: "mentorHub",
   description: "Connecting Mentors and Mentees for Personal and Professional Growth",
@@ -23,6 +23,7 @@ export default function RootLayout({
         </head>
 
       <body className={inter.className}>
+        {/* //Suspense for using useSearchParams and for async loading */}
       <Suspense>
         {children}
         </Suspense>
