@@ -1,7 +1,26 @@
-import React from "react";
+'use client'
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { IoLocation } from "react-icons/io5";
+import { axiosInstance } from "./axiosInstance";
 
 const Mentorprofile = () => {
+  const searchParams = useSearchParams()
+  const search = searchParams.get('id')
+  const [mentorDetails,setMentorDetails]=useState<any>('')
+  console.log(mentorDetails);
+  
+  useEffect(()=>{
+    axiosInstance.get(`/getDetails/${search}`).then(
+      (res)=>{
+        setMentorDetails(res.data.data)  
+      }
+      ).catch((err:any)=>{
+        alert(err.message)
+        window.location.href='/'
+      })
+  },[])
+
   const career = [
     "software development",
     "javascript",
@@ -36,8 +55,11 @@ const Mentorprofile = () => {
       per: "80%",
     },
   ];
-  return (
-    <div className="h-full bg-gray-200 flex max-[893px]:flex-col mt-10 gap-3 p-2  ">
+  if(search){
+
+  
+  return mentorDetails && (
+   <div className="h-full bg-gray-200 flex max-[893px]:flex-col mt-10 gap-3 p-2  ">
       <div className="lg:w-[40%] md:w-full">
         <div className="  bg-white shadow-lg transform duration-200 easy-in-out rounded-lg">
           <div className="h-40 overflow-hidden">
@@ -56,25 +78,25 @@ const Mentorprofile = () => {
           </div>
           <div>
             <div className="text-center px-14">
-              <h2 className="text-gray-800 text-3xl font-bold">Mohit Dhiman</h2>
+              <h2 className="text-gray-800 text-3xl font-bold">{mentorDetails?.username || 'nothing here....'}</h2>
               <a
                 className="text-gray-600 text-xl font-semibold mt-2 hover:text-blue-500"
-                href="https://www.instagram.com/immohitdhiman/"
+                href=""
                 target="_blank"
               >
-                Mern Stack Developer
+                {mentorDetails?.profession || 'nothing here....'}
               </a>
 
               <div className="text-sm leading-normal flex justify-center  mt-3 mb-2 text-gray-500 font-bold uppercase">
-                <IoLocation className=" mr-2 text-lg text-gray-500" /> Los
-                Angeles, Californiau
+                <IoLocation className=" mr-2 text-lg text-gray-500" /> 
+                {mentorDetails?.place || 'nothing here....'}
               </div>
               <div className="text-lg leading-normal flex justify-center  mt-3 mb-2 text-gray-500 font-bold uppercase">
-                +91 9876543210
+              {mentorDetails?.phone || 'nothing here....'}
               </div>
 
 
-              <div className="flex justify-center pt-2 space-x-4 align-center">
+              {/* <div className="flex justify-center pt-2 space-x-4 align-center">
                 <a
                   rel="noopener noreferrer"
                   href="#"
@@ -131,10 +153,10 @@ const Mentorprofile = () => {
                     <path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"></path>
                   </svg>
                 </a>
-              </div>
+              </div> */}
             
             </div>
-            <hr className="mt-6" />
+            {/* <hr className="mt-6" />
             <div className="flex ">
               <div className="text-center w-1/2 p-4 text-white rounded-lg bg-red-600 hover:bg-gray-100 cursor-pointer">
                 <p>
@@ -148,12 +170,12 @@ const Mentorprofile = () => {
                   <span className="font-semibold"></span> Following
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       {/* skill badge */}
         <div className="  bg-white shadow-lg transform p-10 h-auto duration-200 rounded-lg easy-in-out mt-2">
-          {career.map((i) => (
+          {mentorDetails?.interests.map((i:any) => (
             <div
               className="inline-block bg-blue-500 h-10 p-1  rounded-md shadow-md m-2"
               key={i}
@@ -162,7 +184,7 @@ const Mentorprofile = () => {
                 {i}
               </span>
             </div>
-          ))}
+          )) || 'nothing here....'}
         </div>
       </div>
       {/* //right */}
@@ -176,13 +198,7 @@ const Mentorprofile = () => {
             </h1>
             <h2 className="text-xl font-bold text-black mb-4">About Me</h2>
             <p className="text-gray-700">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              finibus est vitae tortor ullamcorper, ut vestibulum velit
-              convallis. Aenean posuere risus non velit egestas suscipit. Nunc
-              finibus vel ante id euismod. Vestibulum ante ipsum primis in
-              faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam
-              erat volutpat. Nulla vulputate pharetra tellus, in luctus risus
-              rhoncus id.
+             {mentorDetails?.about || 'nothing here....'}
             </p>
           </div>
           <div className="flex max-[539px]:flex-col  max-[539px]:gap-10 gap-24 pr-10">
@@ -190,13 +206,13 @@ const Mentorprofile = () => {
               <span>
                 <h2 className="text-xl font-bold text-black ">Education</h2>
                 <p className="text-lg font-bold text-gray-500 ">
-                  Calicut univercity
+                  {mentorDetails?.latesteducation || 'nothing here....'}
                 </p>
               </span>
               <span>
                 <h2 className="text-xl font-bold text-black ">Role</h2>
                 <p className="text-lg font-bold text-gray-500 ">
-                  Mern Stack Developer
+                  {mentorDetails?.profession || 'nothing here....'}
                 </p>
               </span>
             </div>
@@ -204,23 +220,26 @@ const Mentorprofile = () => {
               <span>
                 <h2 className="text-xl font-bold text-black ">Language</h2>
                 <span className="text-lg font-bold text-gray-500 ">
-                  English,Malayalam,<br />Hindi,Arabic
+                  {mentorDetails?.languages.map((item:any,i:any)=>(
+                     <>{item}, {i-1 %2==0 ? <br />:null}</>
+  ))}
+                  
                 </span>
               </span>
 
               <span>
-                <h2 className="text-xl font-bold text-black ">
+                {/* <h2 className="text-xl font-bold text-black ">
                   Working Hisory
                 </h2>
                 <p className="text-lg font-bold text-gray-500 ">
                   google,facebook
-                </p>
+                </p> */}
               </span>
             </div>
           </div>
         </div>
         {/* Skill section */}
-        <div className="  bg-white flex flex-col gap-10 shadow-lg mt-4  rounded-lg w-full pt-16 p-8 transform duration-200 easy-in-out">
+        {/* <div className="  bg-white flex flex-col gap-10 shadow-lg mt-4  rounded-lg w-full pt-16 p-8 transform duration-200 easy-in-out">
         <h2 className="text-xl font-bold text-black mb-4">Skills</h2>
 
           <div className="lg:flex gap-14">
@@ -255,10 +274,12 @@ const Mentorprofile = () => {
               ))}{" "}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
-  );
+  );}else{
+    window.location.href='/Home'
+  }
 };
 
 export default Mentorprofile;

@@ -177,5 +177,12 @@ module.exports = {
       });
   }
   },
+  getMentors: async (req,res)=>{
+   const mentors=await userSchema.find({role:"mentor"},'-chats')
+   res.json({
+    status: "success",
+    data: mentors,
+  });
+  }
 
 }
