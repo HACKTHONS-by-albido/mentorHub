@@ -23,7 +23,7 @@ const Frame3: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center">
           <h2 className="text-4xl font-bold mb-8 text-gray-800">Expand Your Knowledge with MentorHub</h2>
-          <p className="text-lg mb-8">MentorHub is your go-to platform for unlocking a world of educational opportunities. Whether you're a student, professional, or lifelong learner, we provide a diverse range of resources to help you grow and succeed. Here's what you can explore:</p>
+          <p className="text-lg mb-8">MentorHub is your go-to platform for unlocking a world of educational opportunities. Whether you&apos;re a student, professional, or lifelong learner, we provide a diverse range of resources to help you grow and succeed. Here&apos;s what you can explore:</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg shadow-md p-8">
               <h3 className="text-2xl font-semibold mb-4 text-gray-800">Expert Articles</h3>

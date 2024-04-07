@@ -16,8 +16,7 @@ const MessageComponent = ({item}:any) => {
     )
   },[])
   return (
-    // <div className={`flex ${profile._id==item.FromId._id ? "justify-end": "justify-start"} gap-2.5`}>
-    <div className={`flex items-start gap-2.5 ${profile._id==item.FromId._id ? 'justify-end ':'' } `}>
+    <div className={`flex items-start gap-2.5  ${profile._id==item.FromId._id ? 'justify-end ':'' } `}>
     {profile._id==item.FromId._id  ?null:<img className="w-8 h-8 rounded-full" src="https://imgs.search.brave.com/zgudheWMmcsW_dmo0Otur7tn4aBG6VVffFsMD4fEq4I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzAwLzU0LzI4/LzM2MF9GXzUwMDU0/Mjg5OF9McFlTeTRS/R0FpOTVhRGltM1RM/dFNnQ05VeE5sT2xj/TS5qcGc" alt="Jese image" />}
     {profile._id==item.FromId._id ?<div className='inline-flex self-center items-center'>
    <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" className="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">

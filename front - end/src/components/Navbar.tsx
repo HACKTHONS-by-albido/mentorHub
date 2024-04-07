@@ -1,4 +1,5 @@
 "use client";
+import { deleteCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -15,6 +16,7 @@ const router = useRouter()
 
   const handleLogout = () => {
     // Handle logout logic
+    deleteCookie('token')
   };
 
   return (
@@ -80,7 +82,7 @@ const router = useRouter()
               Logout
             </button>
             <Image
-            onClick={() => router.push('/mentor')}
+            onClick={() => router.push('/updateprofile')}
               src="/avatar.png"
               height={40}
               width={40}

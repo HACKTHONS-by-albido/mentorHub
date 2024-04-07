@@ -5,10 +5,15 @@ const user = new mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     profilepicture: String,
-    bio: String,
     role:String,
     interests:[{type:Object}],
-    chats:[{type:mongoose.SchemaTypes.ObjectId,ref:'conversation'}]
+    chats:[{type:mongoose.SchemaTypes.ObjectId,ref:'conversation'}],
+    profession:String,
+    phonenumber:String,
+    place:String,
+    latesteducation:String,
+    about:String,
+    languages:[{type:String}]
 });
 
 const userSchema = mongoose.model('user', user);
