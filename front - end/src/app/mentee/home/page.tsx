@@ -12,7 +12,6 @@ const page = () => {
     <div>
       <Navbar />
       <Hero />
-
       <Frame1 />
       <Frame2 />
       <Frame3 />
