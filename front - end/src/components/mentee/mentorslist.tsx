@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../axiosInstance';
+import Navbar from '../Navbar';
 
 
 function Mentorslist() {
@@ -14,11 +15,12 @@ function Mentorslist() {
     }
     ).catch((err:any)=>{
       alert(err.message)
-      window.location.href='/'
+      
     })
 },[])
   return mentors && (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
+      <Navbar/>
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="mb-10 md:mb-16">
           <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Explore Our Mentor Network</h2>
@@ -39,8 +41,8 @@ function Mentorslist() {
 
                 <div className="flex justify-center">
                   <div className="flex gap-4">
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2  px-2 rounded-full " onClick={()=>router.push(`/chat?id=${member._id}`)}>chat</button>
-                    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2  px-2 rounded-full" onClick={()=>router.push(`/mentor?id=${member._id}`)} >Learn More</button>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2  px-2 rounded-full " onClick={()=>router.push(`/mentee/chat?id=${member._id}`)}>chat</button>
+                    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2  px-2 rounded-full" onClick={()=>router.push(`mentee/mentor?id=${member._id}`)} >Learn More</button>
 
                    
                   </div>

@@ -51,7 +51,7 @@ const Frame1: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 relative">
-      <h2 className="text-4xl font-bold mb-8 text-center text-gray-800">Discover Mentors Near You</h2>
+      <h2 className="text-4xl font-bold mb-8 text-center text-gray-800">Discover Mentee Near You</h2>
       <div className="relative overflow-hidden">
         <div className="flex space-x-4 transition-transform ease-in-out duration-300" style={{ transform: `translateX(-${currentIndex * (100 / numVisible)}%)` }}>
           {mentorsData.map((mentor, index) => (
@@ -61,7 +61,7 @@ const Frame1: React.FC = () => {
                   <img src={mentor.image} alt={mentor.name} className="w-full md:w-32 h-auto rounded-lg" />
                 </div>
                 <div className="text-center">
-                  <p className="text-lg font-semibold mb-2 text-gray-800">Mentor: {mentor.name}</p>
+                  <p className="text-lg font-semibold mb-2 text-gray-800">Mentee: {mentor.name}</p>
                   <p className="text-gray-600">Location: {mentor.location}</p>
                   <p className="text-gray-600">Expertise: {mentor.expertise}</p>
                   <div className="mt-4 flex justify-center">
