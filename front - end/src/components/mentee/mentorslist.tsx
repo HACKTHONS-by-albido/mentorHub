@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { axiosInstance } from './axiosInstance';
+import { axiosInstance } from '../axiosInstance';
 
 
 function Mentorslist() {

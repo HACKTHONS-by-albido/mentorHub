@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoLocation } from "react-icons/io5";
-import { axiosInstance } from "./axiosInstance";
+import { axiosInstance } from "../axiosInstance";
 
 const Mentorprofile = () => {
   const searchParams = useSearchParams()
