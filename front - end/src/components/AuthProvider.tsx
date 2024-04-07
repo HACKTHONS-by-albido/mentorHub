@@ -19,7 +19,6 @@ const [child,setchild]=useState<any>(<div>{children}</div>)
                     }
                     else if(data.role=="mentee"){
                         window.location.href='/Home'
-
                     }
                 }
                ).catch(
