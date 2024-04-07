@@ -29,7 +29,7 @@ module.exports = {
           data: user,
           auth: true,
           token: token,
-          push: "/AdduserData",
+          push: "/adduserdata",
           tokenName: "token",
         });
       });
