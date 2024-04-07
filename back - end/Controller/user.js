@@ -212,6 +212,47 @@ module.exports = {
     res.json({
       status: "success",
       data: mentee,
-    });
+    })},
+  adduserdata: async (req, res) => {
+    try {
+      const { name, avatar, location, interests } = req.body;
+      let latitude, longitude;
+      if (typeof location === 'string') {
+          [latitude, longitude] = location.split(',').map(coord => parseFloat(coord.trim()));
+      }
+      
+      const updateduser = await userSchema.updateOne(
+        { _id: res.token },
+        {
+          username: name,
+          profilepicture: avatar,
+          interests: interests,
+          location: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+        }
+      );
+      const user = await userSchema
+        .findOne({ _id: res.token })
+        .populate("chats");
+
+      if (updateduser) {
+        res.json({
+          status: "success",
+          data: user,
+        });
+      } else {
+        res.json({
+          status: "failure",
+          message: "User not found",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    }
   },
 };
