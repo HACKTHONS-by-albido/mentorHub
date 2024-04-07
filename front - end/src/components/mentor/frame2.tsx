@@ -56,7 +56,7 @@ const Frame2: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center">
           <h2 className="text-4xl font-bold mb-6">Unlock Your Potential with MentorHub</h2>
-          <p className="text-lg mb-8">Discover mentors in various fields who are ready to guide you on your journey to success.</p>
+          <p className="text-lg mb-8">Discover mentee in various fields who are ready to be guided by you.</p>
           <div className="relative w-full mb-8">
             <input
               type="text"

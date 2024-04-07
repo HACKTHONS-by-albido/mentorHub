@@ -88,7 +88,7 @@ io.on("connection",(socket) => {
           select:'-chats'
         }
        })
-       const private=private1.messages
+       const private=private1?.messages
        
        console.log(private);
         io.in(roomid).emit('privateMsg',private);

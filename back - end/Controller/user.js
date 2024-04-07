@@ -207,4 +207,11 @@ module.exports = {
       data: mentors,
     });
   },
+  getMentee: async (req, res) => {
+    const mentee = await userSchema.find({ role: "mentee" }, "-chats");
+    res.json({
+      status: "success",
+      data: mentee,
+    });
+  },
 };

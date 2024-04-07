@@ -1,5 +1,5 @@
 import React from 'react'
-import Updateprofile from '@/components/mentee/Updateprofile'
+import Updateprofile from '@/components/mentor/Updateprofile'
 import Navbar from '@/components/Navbar'
 
 const page = () => {

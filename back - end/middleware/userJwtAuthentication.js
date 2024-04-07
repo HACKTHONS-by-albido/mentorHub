@@ -12,6 +12,7 @@ module.exports= (req, res, next) => {
     let token = authHeader.split(" ")[1];
     jwt.verify(token,process.env.JWT, async function (err, data) {
       if (err) {
+        console.log(err.message);
         res.status(500).json({ status: "failure",message:err.message });
          
       } else {

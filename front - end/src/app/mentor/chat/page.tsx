@@ -78,7 +78,7 @@ console.log(chats);
               <div className="flex-shrink-0">
                 <img
                   className="w-16 h-16 rounded-full"
-                  src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
+                  src={item.peoples.filter((i:any)=>i._id!=history._id)[0].profilepicture || "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="}
                   alt="Neil image"
                 />
               </div>
@@ -206,7 +206,8 @@ console.log(chats);
               <div className="flex-shrink-0">
                 <img
                   className="w-16 h-16 rounded-full"
-                  src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
+                  src={item.peoples.filter((i:any)=>i._id!=history._id)[0].profilepicture || "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="}
+
                   alt="Neil image"
                 />
               </div>

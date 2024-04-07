@@ -14,6 +14,8 @@ export default function Home() {
            axiosInstance.get("/profile").then(
             (res)=>{
                 const {data}=res.data
+                console.log(data);
+                
                 if (data.role=="mentor") {
                     router.push('/mentor/home')
                 }
