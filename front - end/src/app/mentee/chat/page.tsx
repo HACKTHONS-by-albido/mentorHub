@@ -1,5 +1,5 @@
 'use client'
-import Footer from "@/components/Footer";
+import Footer from "@/components/mentee/Footer";
 import Navbar from "@/components/Navbar";
 import { axiosInstance } from "@/components/axiosInstance";
 import MessageComponent from "@/components/chat/bubble";

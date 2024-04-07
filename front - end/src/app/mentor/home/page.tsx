@@ -1,10 +1,10 @@
-import Footer from "@/components/Footer";
+import Footer from "@/components/mentee/Footer";
 import Navbar from "@/components/Navbar";
-import Frame1 from "@/components/frame1";
-import Frame2 from "@/components/frame2";
-import Frame3 from "@/components/frame3";
+import Frame1 from "@/components/mentee/frame1";
+import Frame2 from "@/components/mentee/frame2";
+import Frame3 from "@/components/mentee/frame3";
 
-import Hero from "@/components/hero";
+import Hero from "@/components/mentee/hero";
 import React from "react";
 
 const page = () => {

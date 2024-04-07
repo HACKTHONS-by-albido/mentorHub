@@ -1,5 +1,5 @@
-import Footer from '@/components/Footer'
-import Mentorprofile from '@/components/Mentorprofile'
+import Footer from '@/components/mentee/Footer'
+import Mentorprofile from '@/components/mentee/Mentorprofile'
 import Navbar from '@/components/Navbar'
 import React from 'react'
 

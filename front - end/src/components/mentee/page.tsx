@@ -1,6 +1,6 @@
 'use client'
 import { axiosInstance } from '@/components/axiosInstance'
-import UserInformation from '@/components/UserDetials'
+import UserInformation from '@/components/mentee/UserDetials'
 import React, { useEffect } from 'react'
 
 const page = () => {

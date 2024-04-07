@@ -1,4 +1,4 @@
-import Mentorslist from '@/components/mentorslist'
+import Mentorslist from '@/components/mentee/mentorslist'
 import React from 'react'
 
 const page = () => {
