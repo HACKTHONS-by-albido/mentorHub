@@ -62,7 +62,7 @@ module.exports = {
             data: user,
             auth: true,
             token: token,
-            push: "/Home",
+            push: "/mentor/home",
             tokenName: "token",
             message: "Welcome sir",
           });
@@ -72,7 +72,7 @@ module.exports = {
             data: user,
             auth: true,
             token: token,
-            push: "/Home",
+            push: "/mentee/home",
             tokenName: "token",
             message: "Welcome sir",
           });
@@ -82,7 +82,7 @@ module.exports = {
             data: user,
             auth: true,
             token: token,
-            push: "/AdduserData",
+            push: "/adduserdata",
             tokenName: "token",
             message: "Welcome sir",
           });
