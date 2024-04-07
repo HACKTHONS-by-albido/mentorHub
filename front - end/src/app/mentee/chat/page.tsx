@@ -39,6 +39,7 @@ console.log(chats);
     axiosInstance.get(`/getDetails/${id}`).then(
       (res)=>{
         setCurrentId(res.data.data)
+        //to get access to the room
         socket.emit('privateMsg',cookie,id)
          
       }
