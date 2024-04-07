@@ -42,7 +42,7 @@ function Mentorslist() {
                 <div className="flex justify-center">
                   <div className="flex gap-4">
                   <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2  px-2 rounded-full " onClick={()=>router.push(`/mentee/chat?id=${member._id}`)}>chat</button>
-                    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2  px-2 rounded-full" onClick={()=>router.push(`mentee/mentor?id=${member._id}`)} >Learn More</button>
+                    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2  px-2 rounded-full" onClick={()=>router.push(`/mentee/mentor?id=${member._id}`)} >Learn More</button>
 
                    
                   </div>
